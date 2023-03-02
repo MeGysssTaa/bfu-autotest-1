@@ -30,23 +30,23 @@ class KantianaTest {
     @Step("Open website \"{url}\"")
     fun openWebsite(url: String) = driver.get(url)
 
-    @Step("Hovering element \"{debugName}\"")
+    @Step("Hover element \"{debugName}\"")
     fun hoverElement(@Suppress("UNUSED_PARAMETER") debugName: String, elemFinder: By) {
         val elem = driver.findElement(elemFinder)
         Actions(driver).moveToElement(elem).perform()
     }
 
-    @Step("Clicking element \"{debugName}\"")
+    @Step("Click element \"{debugName}\"")
     fun clickElement(@Suppress("UNUSED_PARAMETER") debugName: String, elemFinder: By) {
         val elem = driver.findElement(elemFinder)
         Actions(driver).moveToElement(elem).perform() // fixes "element ... could not be scrolled into view"
         elem.click()
     }
 
-    @Step("Ensuring that we landed on page \"{url}\"")
+    @Step("Ensure that we landed on page \"{url}\"")
     fun ensureLandedOnPage(url: String) = assertEquals(driver.currentUrl, url)
 
-    @Step("Ensuring that element \"{debugName}\" exists and its text is equal to \"text\"")
+    @Step("Ensure that element \"{debugName}\" exists and its text is equal to \"text\"")
     fun checkElemText(@Suppress("UNUSED_PARAMETER") debugName: String, elemFinder: By, text: String) {
         val elem = try {
             driver.findElement(elemFinder)
@@ -57,7 +57,7 @@ class KantianaTest {
     }
 
     @Test
-    fun foo() {
+    fun `test open kantiana and navigate to admission dates leads us to the proper page`() {
         openWebsite("https://kantiana.ru")
         hoverElement("Drop-down list/button 'Enrollee'", By.xpath(
             "//div[" +
@@ -75,6 +75,5 @@ class KantianaTest {
         checkElemText("Title 'Admission dates'", By.xpath(
             "//h1[contains(@class, 'page__title')]"
         ), "Сроки проведения приема")
-        Thread.sleep(5000)
     }
 }
