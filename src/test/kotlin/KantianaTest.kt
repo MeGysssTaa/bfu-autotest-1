@@ -53,7 +53,7 @@ class KantianaTest {
         } catch (_: NoSuchElementException) {
             fail("element \"$debugName\" could not be found")
         }
-        assertEquals(elem.text, text)
+        assertEquals(text, elem.text)
     }
 
     @Test
