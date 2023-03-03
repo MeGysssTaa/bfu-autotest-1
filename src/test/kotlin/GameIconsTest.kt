@@ -24,6 +24,16 @@ class GameIconsTest {
         driver.quit()
     }
 
+    @Test
+    fun `test find and download capybara png image from game icons leads to direct file url`() {
+        openWebsite("https://game-icons.net")
+        searchUsingField("algolia-search", "capybara")
+        ensureLandedOnPage("https://game-icons.net/1x1/caro-asercion/capybara.html")
+        clickDownloadButton(2) // PNG
+        ensureLandedOnPage("https://game-icons.net/icons/ffffff/000000/1x1/caro-asercion/capybara.png")
+        checkContainsImage(By.xpath("/html/body/img"))
+    }
+
     @Step("Open website \"{url}\"")
     fun openWebsite(url: String) = driver.get(url)
 
@@ -54,15 +64,5 @@ class GameIconsTest {
         if (driver.findElements(imageFinder).isEmpty()) {
             fail("image not found")
         }
-    }
-
-    @Test
-    fun `test find and download capybara png image from game icons works`() {
-        openWebsite("https://game-icons.net")
-        searchUsingField("algolia-search", "capybara")
-        ensureLandedOnPage("https://game-icons.net/1x1/caro-asercion/capybara.html")
-        clickDownloadButton(2) // PNG
-        ensureLandedOnPage("https://game-icons.net/icons/ffffff/000000/1x1/caro-asercion/capybara.png")
-        checkContainsImage(By.xpath("/html/body/img"))
     }
 }

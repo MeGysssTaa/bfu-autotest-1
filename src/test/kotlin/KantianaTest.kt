@@ -27,6 +27,27 @@ class KantianaTest {
         driver.quit()
     }
 
+    @Test
+    fun `test open kantiana and navigate to admission dates leads us to the proper page`() {
+        openWebsite("https://kantiana.ru")
+        hoverElement("Drop-down list/button 'Enrollee'", By.xpath(
+            "//div[" +
+                    "contains(@class, 'menu-main__item--lvl-1') " +
+                    "and contains(.//span, 'Абитуриенту')" +
+                    "]"
+        ))
+        clickElement("Button 'Admission dates'", By.xpath(
+            "//div[" +
+                    "contains(@class, 'menu-main__item--lvl-3') " +
+                    "and contains(.//span, 'Сроки проведения')" +
+                    "]"
+        ))
+        ensureLandedOnPage("https://kantiana.ru/enrollee/admission-committee/sroki-provedeniya-priema/#")
+        checkElemText("Title 'Admission dates'", By.xpath(
+            "//h1[contains(@class, 'page__title')]"
+        ), "Сроки проведения приема")
+    }
+
     @Step("Open website \"{url}\"")
     fun openWebsite(url: String) = driver.get(url)
 
@@ -54,26 +75,5 @@ class KantianaTest {
             fail("element \"$debugName\" could not be found")
         }
         assertEquals(text, elem.text)
-    }
-
-    @Test
-    fun `test open kantiana and navigate to admission dates leads us to the proper page`() {
-        openWebsite("https://kantiana.ru")
-        hoverElement("Drop-down list/button 'Enrollee'", By.xpath(
-            "//div[" +
-                    "contains(@class, 'menu-main__item--lvl-1') " +
-                    "and contains(.//span, 'Абитуриенту')" +
-                    "]"
-        ))
-        clickElement("Button 'Admission dates'", By.xpath(
-            "//div[" +
-                    "contains(@class, 'menu-main__item--lvl-3') " +
-                    "and contains(.//span, 'Сроки проведения')" +
-                    "]"
-        ))
-        ensureLandedOnPage("https://kantiana.ru/enrollee/admission-committee/sroki-provedeniya-priema/#")
-        checkElemText("Title 'Admission dates'", By.xpath(
-            "//h1[contains(@class, 'page__title')]"
-        ), "Сроки проведения приема")
     }
 }

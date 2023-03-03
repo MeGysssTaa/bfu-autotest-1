@@ -23,6 +23,16 @@ class DeeplTranslateTest {
         driver.quit()
     }
 
+    @Test
+    fun `test deepl website translates english hello world to german hallo welt correctly`() {
+        openWebsite("https://www.deepl.com/translator")
+        expandOutputLanguagesSelector()
+        selectOutputLanguage(2, 3) // German/Deutsch
+        enterInputTextAnyLanguage("Hello, world!") // input-lang should likely differ from output-lang ^
+        Thread.sleep(1000)
+        checkOutput("hallo, welt!")
+    }
+
     @Step("Open website \"{url}\"")
     fun openWebsite(url: String) = driver.get(url)
 
@@ -53,15 +63,5 @@ class DeeplTranslateTest {
         val outputTextAreaContainer = driver.findElements(By.className("lmt__inner_textarea_container"))[1]
         val outputTextArea = outputTextAreaContainer.findElement(By.xpath("./d-textarea/div"))
         assertEquals(expectedTranslation.lowercase().trim(), outputTextArea.text.lowercase().trim())
-    }
-
-    @Test
-    fun `test deepl website translates english hello world to german hallo welt correctly`() {
-        openWebsite("https://www.deepl.com/translator")
-        expandOutputLanguagesSelector()
-        selectOutputLanguage(2, 3) // German/Deutsch
-        enterInputTextAnyLanguage("Hello, world!") // input-lang should likely differ from output-lang ^
-        Thread.sleep(1000)
-        checkOutput("hallo, welt!")
     }
 }
