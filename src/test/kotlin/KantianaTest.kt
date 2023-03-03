@@ -44,7 +44,7 @@ class KantianaTest {
     }
 
     @Step("Ensure that we landed on page \"{url}\"")
-    fun ensureLandedOnPage(url: String) = assertEquals(driver.currentUrl, url)
+    fun ensureLandedOnPage(url: String) = assertEquals(url, driver.currentUrl)
 
     @Step("Ensure that element \"{debugName}\" exists and its text is equal to \"text\"")
     fun checkElemText(@Suppress("UNUSED_PARAMETER") debugName: String, elemFinder: By, text: String) {
